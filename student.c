@@ -12,6 +12,52 @@ studentBT* createStudentBT()
     return sBT;
 }
 
+student *readStudentFile(FILE *file)
+{
+    char s[256];
+    
+    student *st = (student*) malloc ( sizeof( student));
+    fgets(s, 256, file);
+    char *token = strtok(s, "\n");
+    strcpy(st->name, token);
+    fgets(s, 256, file);
+    token = strtok(s, "\n");
+    strcpy(st->degree, token);
+    courseBT *cBT = createCourseBT();
+    while(fgets(s, 256, file) != NULL)
+    {
+        token = strtok(s, "\n");
+        course *c = (course*) malloc ( sizeof (course));
+        strcpy(c->name, token);
+        addElementCourseBT(cBT, c);
+    }
+    st->courses = cBT;
+
+    return st;
+}
+
+student *getStudent(studentBT *sBT, char *name)
+{
+    studentBTNode *cur = sBT->head;
+
+    while(cur != NULL)
+    {
+        if (strcmp(cur->st->name, name) == 0)
+        {
+            return cur->st;
+        }
+
+        if (strcmp(cur->st->name, name) > 0)
+        {
+            cur = cur->left;
+        } else
+        {
+            cur = cur->right;
+        }
+        
+    }
+    return NULL;
+}
 void insertStudent(studentBTNode *cur, studentBTNode *new)
 {
     if ( strcmp(cur->st->name, new->st->name) > 0)

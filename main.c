@@ -9,33 +9,49 @@
 int main(int argc, char *argv[])
 {
 
-    FILE *file = fopen("student1.txt", "r");
+    FILE *file1 = fopen("student1.txt", "r");
+    FILE *file2 = fopen("student2.txt", "r");
+    FILE *file3 = fopen("degree1.txt", "r");
+    FILE *file4 = fopen("department1.txt", "r");
     char s[256];
+    fgets(s, 256, file1);
+    fgets(s, 256, file2);
+    fgets(s, 256, file3);
+    fgets(s, 256, file4);
+    //student
     studentBT *sBT = createStudentBT();
-    student *st = (student*) malloc ( sizeof( student));
-    fgets(s, 256, file);
-    fgets(s, 256, file);
-    char *token = strtok(s, "\n");
-    strcpy(st->name, token);
-    fgets(s, 256, file);
-    token = strtok(s, "\n");
-    strcpy(st->degree, token);
-    courseBT *cBT = createCourseBT();
-    while(fgets(s, 256, file) != NULL)
-    {
-        token = strtok(s, "\n");
-        course *c = (course*) malloc ( sizeof (course));
-        strcpy(c->name, token);
-        addElementCourseBT(cBT, c);
-    }
-    st->courses = cBT;
+    student *st1 = readStudentFile(file1);
+    student *st2 = readStudentFile(file2);
+    addStudentToBT(sBT, st1);
+    addStudentToBT(sBT, st2);
 
-    addStudentToBT(sBT, st);
     printStudentBT(sBT);
     
-    deleteStudentBT(sBT);
 
-    fclose(file);
+    //degree
+    degreeArrayList *degreeList  = createDegreeArrayList();
+    degree *degree1              = readDegreeFile(file3);
+    addDegreeArrayList(degreeList, degree1);
+    // printDegree(degree1);
+    //degree *d = getDegree(degreeList, "AB Computer Science");
+
+    commandM(sBT, degreeList, "Cesar Gonzales");
+
+    //department
+    departmentList *departmentList  = createDepartmentList();
+    department *department1         = readDepartmentFile(file4);
+    addToDepartmentList(departmentList, department1);
+    course *course = getCourse(department1->cBT, "MATH 263");
+
+    printf("\n\n");
+    commandN(sBT, degreeList, departmentList, "Cesar Gonzales");
+    deleteStudentBT(sBT);
+    deleteDegreeArrayList(degreeList);
+    deleteDepartmentList(departmentList);
+
+    fclose(file1);
+    fclose(file2);
+    fclose(file3);
     // if (argc != 5) {printf("Please provide valid files!\n"); return 0;}
     // FILE *file1 = fopen(argv[1], "r");
     // FILE *file2 = fopen(argv[2], "r");

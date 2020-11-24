@@ -18,6 +18,7 @@ typedef struct courseBTNode{
     course *course;
     struct courseBTNode *left;
     struct courseBTNode *right;
+    struct courseBTNode *parent;
 } courseBTNode;
 
 typedef struct courseBT{
@@ -31,6 +32,18 @@ void printCourse(course *);
  */
 courseBT* createCourseBT();
 
+/**
+ * returns 1 if given course is in the list
+ * 0 if it is not
+ */
+int findCourse(courseBT *, char *);
+
+void removeCourse(courseBT *, char *);
+/**
+ * returns pointer to the course with provided name
+ * NULL if course does with given name does not exist
+ */
+course *getCourse(courseBT *, char *);
 /**
  * adds element to given course Binary Tree
  */

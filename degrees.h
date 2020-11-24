@@ -6,9 +6,19 @@
 #ifndef DEGREES_HH
 #define DEGREES_HH
 
+typedef struct reqCourse{
+    char course[256];
+}reqCourse;
+
+typedef struct requirements{
+    reqCourse **reqCourses;
+    int size;
+}requirements;
+
 typedef struct degree{
     char name[256];
-    linkedListReq* reqs;
+    requirements **req;
+    int size;
 } degree;
 
 typedef struct degreeArrayList{
@@ -30,6 +40,8 @@ degreeArrayList* createDegreeArrayList();
  * reads File for a degree and returns degree pointer containing the information in the file.
  */
 degree* readDegreeFile(FILE *);
+
+degree* getDegree(degreeArrayList *, char *);
 /**
  * frees up all the memory alocated by degreeArrayList recursively.
  */

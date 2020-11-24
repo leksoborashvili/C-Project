@@ -17,18 +17,57 @@ courseBT* createCourseBT()
     return cBT;
 }
 
+int findTraversal(courseBTNode *cur, char *name)
+{
+    if (cur == NULL) return 0;
+    if ( (strstr(cur->course->name, name) != NULL) || (strstr(name, cur->course->name) != NULL)) return 1;
+    int left = findTraversal(cur->left, name);
+    if (left == 1) return 1;
+    int right = findTraversal(cur->right, name);
+    if (right == 1) return 1;
+    return 0;
+
+}
+
+int findCourse(courseBT *cBT, char *name)
+{
+    return findTraversal(cBT->head, name);
+}
+
+course *getTraversal(courseBTNode *cur, char *name)
+{
+    if (cur == NULL) return NULL;
+    if ( strstr(cur->course->name, name) != NULL) return cur->course;
+    if (cur->left != NULL) 
+    {
+        course *course = getTraversal(cur->left, name);
+        if (course != NULL) return course;
+    }
+    if (cur->right != NULL) 
+    {
+        course *course = getTraversal(cur->right, name);
+        if (course != NULL) return course;
+    }
+
+}
+
+course *getCourse(courseBT *cBT, char *name)
+{
+    if (cBT->head == NULL) return NULL;
+    return getTraversal(cBT->head, name);
+}
 
 void insertCourseBT(courseBTNode *cur, courseBTNode *new)
 {
     if (strcmp(cur->course->name, new->course->name) > 0)
     {
-        if (cur->left == NULL) {cur->left = new; }
+        if (cur->left == NULL) {cur->left = new; new->parent = cur; }
             else {insertCourseBT(cur->left, new);}
         return;
     }
     else
     {
-        if (cur->right == NULL) {cur->right = new;}
+        if (cur->right == NULL) {cur->right = new; new->parent = cur;}
             else {insertCourseBT(cur->right, new);}
         return;
     }
@@ -40,6 +79,7 @@ void addElementCourseBT(courseBT *cBT, course *c)
     cBTNode->course = c;
     cBTNode->left   = NULL;
     cBTNode->right  = NULL;
+    cBTNode->parent = NULL;
     if (cBT-> head == NULL)
     {
         cBT ->head = cBTNode;
@@ -74,8 +114,12 @@ void freeBT(courseBTNode *cur)
     if (cur ->left  != NULL) freeBT(cur->left);
     if (cur ->right != NULL) freeBT(cur->right);
 
-    deleteLinkedListReq(cur->course->reqList);
-    if (cur->course != NULL) free(cur->course);
+   
+    if (cur->course != NULL) 
+    { 
+        if (cur->course->reqList != NULL) deleteLinkedListReq(cur->course->reqList);
+        free(cur->course);
+    }
     if (cur         != NULL) free(cur);
 }
 
@@ -86,3 +130,22 @@ void deleteCourseBT(courseBT *cBT)
     return;
 }
 
+void removeTraversal(courseBTNode *cur, char *name)
+{
+    if (cur == NULL) return;
+    
+    if (strcmp(cur->course->name, name) == 0)
+    {
+        if (cur->left == NULL && cur->right == NULL)
+        {
+            if (cur->parent->left == cur)
+            {
+                cur->parent->left = NULL;
+            }
+        }
+    }
+}
+void removeCourse(courseBT *cBT, char *name)
+{
+    if (cBT->head != NULL) removeTraversal(cBT->head, name);
+}

@@ -25,6 +25,10 @@ typedef struct studentBT{
 
 studentBT* createStudentBT();
 
+student* readStudentFile(FILE *);
+
+student* getStudent(studentBT *, char *);
+
 void addStudentToBT(studentBT *, student *);
 
 void printStudentBT(studentBT *);

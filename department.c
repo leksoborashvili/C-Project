@@ -111,3 +111,13 @@ department* readDepartmentFile(FILE *file)
     d->cBT = courseBT;
     return d;
 }
+
+
+department *getDepartment(departmentList *dList, char *name)
+{
+    for (int i = 0; i < dList->curSize; i ++)
+    {
+        if (strcmp(dList->departments[i]->name, name) == 0) return dList->departments[i];
+    }
+    return NULL;
+}

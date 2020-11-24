@@ -28,6 +28,9 @@ departmentList* createDepartmentList();
  * reads file and returns pointer to struct department containing all the information from a file.
  */
 department* readDepartmentFile(FILE *);
+
+department* getDepartment(departmentList *, char *);
+
 /**
  * adds department to given list
  */
