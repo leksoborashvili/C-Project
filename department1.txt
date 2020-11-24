@@ -1,0 +1,116 @@
+DEPARTMENT
+Mathematics
+MATH 104
+A World of Mathematics
+
+MATH 110
+Statistical Concepts
+
+MATH 125
+Modeling and Differential Calculus
+
+MATH 141
+Differential Calculus and Economic Modeling
+
+MATH 161
+Calculus 1
+
+MATH 162
+Calculus 2
+OR MATH 161, MATH 165
+MATH 165
+Calculus 1+
+
+MATH 182
+Discrete Structures
+OR CS 104, MATH 161
+MATH 186
+Applied Statistics
+OR MATH 161, MATH 141
+MATH 246
+Evolutionary Game Theory
+OR MATH 161, ECON 101
+MATH 263
+Calculus 3
+MATH 162
+MATH 264
+Differential Equations with Linear Algebra
+MATH 263
+MATH 272
+Linead Algebra with Applications
+MATH 263
+MATH 282
+Techniques of Mathematical Modeling
+MATH 162
+MATH 286
+Introduction to Probability nd Mathematical Statistics
+MATH 263
+MATH 287
+Introduction to Data Modeling
+OR MATH 186, MATH 286, MATH 336, PSYC 120
+MATH 290
+Transition to Theoretical Mathematics
+MATH 263
+MATH 300
+Vector Spaces
+MATH 290
+MATH 301
+Case Studies in Mathematical Modeling
+OR MATH 272, MATH 300, MATH 282
+MATH 306
+Operations Research
+OR MATH 272, MATH 300
+MATH 310
+Ordinary Differential Equations
+OR MATH 263, MATH 300
+MATH 312
+Partial Differential Equations
+MATH 263
+MATH 323
+Geometry
+MATH 162
+MATH 325
+Combinatorics
+MATH 263
+MATH 328
+Number Theory
+MATH 263
+MATH 335
+Probability
+MATH 263
+MATH 336
+Mathematical Statistics
+MATH 335
+MATH 337
+Introduction to Stochastic Processes
+OR MATH 335, MATH 300
+MATH 338
+Advanced Regression Analysis
+MATH 336
+MATH 343
+Advanced Multivariable Calculus
+MATH 263
+MATH 345
+Complex Analysis
+MATH 263
+MATH 347
+Financial Mathematics
+ECON 101
+MATH 351
+Abstract Algebra 1
+MATH 290
+MATH 352
+Abstract Algebra 2
+MATH 351
+MATH 356
+Introduction to Real Analysis
+MATH 290
+MATH 357
+Real Analysis 2
+MATH 356
+MATH 358
+Topology
+MATH 356
+MATH 360
+History of Mathematics
+MATH 263

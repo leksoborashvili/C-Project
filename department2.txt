@@ -1,0 +1,41 @@
+DEPARTMENT
+German
+GERM 101
+Elementary German 1
+
+GERM 102
+Elementary German 2
+GERM 101
+GERM 111
+Intermediate German 1
+GERM 102
+GERM 112
+Intermediate German 2
+GERM 111
+GERM 201
+Advanced German
+GERM 112
+GERM 212
+Vienna and Berlin in Architecture, Literature, and Film
+GERM 201
+GERM 225
+Business German
+GERM 112
+GERM 311
+German and Austrian identities as Reflected in Contemporary Media
+
+GERM 312
+Exploring German America
+
+GERM 322
+German Literature and Culture after 1750
+
+GERM 423
+German Literature and Culture in the Age of Imperialism
+
+GERM 424
+From Modernism to Postmodernism and Beyond: Literature and Film of the German-Speaking World in the Twentieth Century
+
+GERM 431
+Literature and Film as a Mirror of Socio-Historical Issues in the Contemporary German-Speaking World
+

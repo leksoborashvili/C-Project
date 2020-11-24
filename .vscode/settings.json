@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "requirements.h": "c",
+        "degrees.h": "c",
+        "commands.h": "c",
+        "limits": "c",
+        "typeinfo": "c"
+    }
+}
