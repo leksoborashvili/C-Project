@@ -88,7 +88,7 @@ department* readDepartmentFile(FILE *file)
         strcat(b, " ");
         if (token != NULL) strcat(b, token);
         //printf("%s\n", b);
-
+        if (b[strlen(b) - 1] == '\n') b[strlen(b) - 1] = 0;
         if (strcmp(b, "\n ") != 0) addLastNodeReq(reqs, b);
         //parsing all the requirements using strtok();
         while(token != NULL)
@@ -102,6 +102,7 @@ department* readDepartmentFile(FILE *file)
             if (token == NULL ) break;
             strcat(b, token);
             //printf("%s\n", b);
+            if (b[strlen(b) - 1] == '\n') b[strlen(b) - 1] = 0;
             addLastNodeReq(reqs, b);
         }
         c->reqList = reqs;

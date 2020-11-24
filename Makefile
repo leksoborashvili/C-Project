@@ -1,5 +1,5 @@
 run: compile
-	./a.out department1.txt department2.txt degree1.txt degree2.txt
+	./a.out department1.txt department2.txt degree1.txt degree2.txt student1.txt student2.txt
 
 compile: c
 	gcc -Wall requirements.o main.o course.o degrees.o department.o commands.o student.o

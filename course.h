@@ -39,6 +39,8 @@ courseBT* createCourseBT();
 int findCourse(courseBT *, char *);
 
 void removeCourse(courseBT *, char *);
+
+void removeCourseFromReq(courseBT *, char *);
 /**
  * returns pointer to the course with provided name
  * NULL if course does with given name does not exist

@@ -104,7 +104,7 @@ degree* readDegreeFile(FILE *file)
         reqs[sizeReqs]->reqCourses = (reqCourse**) malloc (10 * sizeof(reqCourse*) );
         char *token = strtok(s, " ");
         int size = 0;
-        if (strcmp(token, "OR") == NULL) 
+        if (strcmp(token, "OR") == 0)
         {
             while(token!=NULL)
             {
@@ -129,7 +129,7 @@ degree* readDegreeFile(FILE *file)
         } else
         {
             reqs[sizeReqs]->reqCourses[size] = (reqCourse *) malloc (sizeof (reqCourse));
-            strcpy(reqs[sizeReqs]->reqCourses[0], token);
+            strcpy(reqs[sizeReqs]->reqCourses[0]->course, token);
             token = strtok(NULL, ", ");
             if (token == NULL) break;
             strcat(reqs[sizeReqs]->reqCourses[size]->course, " ");

@@ -42,7 +42,7 @@ void printListReq(linkedListReq *list)
         printf("%s ", head->data);
         head = head->next;
     }
-    printf("%s", head->data);
+    printf("%s\n", head->data);
     return;
 }
 

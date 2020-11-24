@@ -90,19 +90,18 @@ void addElementCourseBT(courseBT *cBT, course *c)
 
 
 
-void PreOrder(courseBTNode *cur)
+void PrintTraversal(courseBTNode *cur)
 {
     if (cur == NULL) return;
     printCourse(cur->course);
-
-    if (cur->left  != NULL) PreOrder(cur->left);
-    if (cur->right != NULL) PreOrder(cur->right);
+    if (cur->left  != NULL) PrintTraversal(cur->left);
+    if (cur->right != NULL) PrintTraversal(cur->right);
 }
 void printCourseBT(courseBT *cBT)
 {
     if (cBT->head == NULL) return;
 
-    PreOrder(cBT->head);
+    PrintTraversal(cBT->head);
     
 }
 
@@ -130,22 +129,200 @@ void deleteCourseBT(courseBT *cBT)
     return;
 }
 
-void removeTraversal(courseBTNode *cur, char *name)
+void removeTraversal(courseBT *cBT, char *name)
 {
-    if (cur == NULL) return;
-    
-    if (strcmp(cur->course->name, name) == 0)
+    courseBTNode *cur = cBT->head;
+    while (cur != NULL)
     {
-        if (cur->left == NULL && cur->right == NULL)
+    
+        if (strcmp(cur->course->name, name) == 0)
         {
-            if (cur->parent->left == cur)
+            courseBTNode *parent = cur->parent;
+            //both children NULL
+            if (cur->left == NULL && cur->right == NULL)
             {
-                cur->parent->left = NULL;
+                if (parent == NULL) 
+                {
+                    cBT->head = NULL;
+                    return;
+                }
+                if (parent->left == cur)
+                {
+                    free(cur);
+                    parent->left = NULL;
+                } else
+                {
+                    free(cur);
+                    parent->right = NULL;
+                }
+                return;
             }
+            //case where left is not NULL and right is.
+            if (cur->left != NULL && cur->right == NULL)
+            {
+                if (parent == NULL)
+                {
+                    cBT->head = cur->left;
+                    cur->left->parent = NULL;
+                    free(cur);
+                    return;
+                }
+                if (parent->left == cur)
+                {
+                    parent->left = cur->left;
+                    parent->left->parent = parent;
+                    free(cur);
+                    
+                } else
+                {
+                    parent->right = cur->left;
+                    parent->right->parent = parent;
+                    free(cur);
+                }
+                return;
+            }
+            //case where Right is NULL left is not.
+            if (cur->left == NULL && cur->right != NULL)
+            {
+                if (parent == NULL)
+                {
+                    cBT->head = cur->right;
+                    cur->right->parent = NULL;
+                    free(cur);
+                    return;
+                }
+                if (parent->left == cur)
+                {
+                    parent->left = cur->right;
+                    parent->left->parent = parent;
+                    free(cur);
+                    
+                } else
+                {
+                    parent->right = cur->right;
+                    parent->right->parent = parent;
+                    free(cur);
+                }
+                return;
+            }
+            //case where both children are not NULL
+            if (cur->right != NULL && cur->left != NULL)
+            {
+                courseBTNode *suc = cur->right;
+                
+                while(suc->left != NULL)
+                {
+                    suc = suc->left;
+                }
+                //remove successor from the bottom.
+                //successor has right child has to be set 
+                if (suc->right != NULL)
+                {
+                    if (suc->parent->left == suc)
+                    {
+                        suc->parent->left = suc->right;
+                        suc->right->parent = suc->parent;
+                    } else
+                    {
+                        suc->parent->right = suc->right;
+                        suc->right->parent = suc->parent;
+                    }
+                } else //successor does not have right child.
+                {
+                    if (suc->parent->left == suc)
+                    {
+                        suc->parent->left = NULL;
+                    } else
+                    {
+                        suc->parent->right = NULL;
+                    }
+                }
+
+                if (parent == NULL)
+                {
+                    cBT->head = suc;
+                    suc->right  = cur->right;
+                    suc->left   = cur->left;
+                    if (suc->right != NULL) suc->right->parent = suc;
+                    if (suc->left  != NULL)  suc->left->parent = suc;
+                    suc->parent = cur->parent;
+                    free(cur);
+                    return;
+                }
+                //replace cur node with successor.
+                if (parent->left == cur)
+                {
+                    suc->right  = cur->right;
+                    suc->left   = cur->left;
+                    if (suc->right != NULL) suc->right->parent = suc;
+                    if (suc->left  != NULL)  suc->left->parent = suc;
+                    suc->parent = cur->parent;
+                    cur->parent->left = suc;
+                    free(cur);
+                } else
+                {
+                    suc->right  = cur->right;
+                    suc->left   = cur->left;
+                    if (suc->right != NULL) suc->right->parent = suc;
+                    if (suc->left  != NULL)  suc->left->parent = suc;
+                    suc->parent = cur->parent;
+                    cur->parent->right = suc;
+                    free(cur);
+                }
+            }
+        return;
         }
+
+        if (strcmp(cur->course->name, name) > 0)
+        {
+            cur = cur->left;
+        }else
+        {
+            cur = cur->right;
+        }
+
     }
+
 }
+
 void removeCourse(courseBT *cBT, char *name)
 {
-    if (cBT->head != NULL) removeTraversal(cBT->head, name);
+
+        if (cBT->head != NULL) removeTraversal(cBT, name);
+
+}
+
+
+void removeCourseReqTraversal(courseBTNode *cur, char *name)
+{
+    if (cur == NULL) return;
+    if (cur-> left  != NULL) removeCourseReqTraversal(cur->left, name);
+    if (cur-> right != NULL) removeCourseReqTraversal(cur->right, name);
+
+    if (cur->course->reqList == NULL) return;
+
+    for (nodeReq *node = cur->course->reqList->head; node != NULL; node = node->next )
+    {   
+        if (node == NULL) break;
+        if (node->data == NULL) continue;
+
+        if ( strcmp(node->data, name) == 0)
+        {
+            if (node->prev == NULL)
+            {
+                cur->course->reqList->head = node->next;
+                break;
+            }
+            node->prev->next = node->next;
+            if (node -> next != NULL) node->next->prev = node->prev;
+            free(node);
+            break;
+        }
+    }
+
+}
+
+void removeCourseFromReq(courseBT *cBT, char *name)
+{
+    if (cBT->head != NULL)  removeCourseReqTraversal(cBT->head, name);
 }

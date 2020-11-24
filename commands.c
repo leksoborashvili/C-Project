@@ -49,6 +49,7 @@ void commandD(degreeArrayList *dList, char *name)
         }
     }
     printf("NOT FOUND\n");
+    return;
 }
 
 
@@ -59,7 +60,6 @@ void commandSdegree(struct degreeArrayList *dList, char *name)
 {
     for ( int i = 0; i < dList->curSize; i ++)
     {
-        requirements **reqList = dList->degrees[i]->req;
         degree *d = dList->degrees[i];
         for(int j = 0; j < d->size; j++)
         {
@@ -69,7 +69,7 @@ void commandSdegree(struct degreeArrayList *dList, char *name)
             }
         }
     }
-    
+    return;
 }
 
 
@@ -150,7 +150,6 @@ void commandPcourse(departmentList *departmentList, degreeArrayList *degreeList,
     for(int i = 0; i < degreeList->curSize; i ++)
     {
         degree *d = degreeList->degrees[i];
-        requirements **reqList = degreeList->degrees[i]->req;
         for(int j = 0; j < d->size; j++)
         {
             for (int k = 0; k < d->req[j]->size; k++)
@@ -194,6 +193,19 @@ void commandPdegree(degreeArrayList *dList, char *name)
     printf("\n");
 }
 
+void commandPstudent(studentBT *sBT, char *name)
+{
+    student *st = getStudent(sBT, name);
+    if (st == NULL) 
+    {
+        printf("STUDENT NOT FOUND\n");
+        return;
+    }
+    printf("degree: %s\n", st->degree);
+    printf("completed:\n");
+    printCourseBT(st->courses);
+    printf("------\n\n");
+}
 
 void commandM(studentBT *sBT, degreeArrayList *dList, char *name)
 {
@@ -272,10 +284,68 @@ void commandN(studentBT *sBT, degreeArrayList *degList, departmentList *depList,
 }
 
 
-void commandR(degreeArrayList *degList, departmentList *depList, char *name)
+void commandR(degreeArrayList *degList, departmentList *depList, char *depName, char *courseName)
 {
-    department *dep = getDepartment(depList, name);
+    department *dep = getDepartment(depList, depName);
     if (dep == NULL) {printf("DEPARTMENT NOT FOUND\n"); return;}
-
+    //removes course from department courses.
+    removeCourse(dep->cBT, courseName);
     
+    //removes course from degree list.
+    for(int i = 0; i < degList->curSize; i ++ )
+    {
+        for (int j = 0; j < degList->degrees[i]->size; j ++)
+        {
+            requirements *reqs = degList->degrees[i]->req[j]; 
+            for (int k = 0; k < reqs->size; k ++)
+            {
+                if (strcmp(courseName, reqs->reqCourses[k]->course) == 0)
+                {
+                    for (int jk = k; jk < reqs->size -1; jk ++)
+                    {
+                        strcpy(reqs->reqCourses[jk]->course, reqs->reqCourses[jk+1]->course);
+                    }
+                    if (reqs->size > 0) reqs->size--;
+                    break;
+                }
+            }
+        }
+    }
+
+    //remove from requirements
+    for (int i = 0; i < depList->curSize; i ++)
+    {
+        dep = depList->departments[i];
+        removeCourseFromReq(dep->cBT, courseName);
+    }
+
+}
+
+
+void commandQ(degreeArrayList *degList, char *degName, char *courseName)
+{
+    degree *d = getDegree(degList, degName);
+
+    for (int j = 0; j < d->size; j ++)
+        {
+            requirements *reqs = d->req[j]; 
+            for (int k = 0; k < reqs->size; k ++)
+            {
+                if (strcmp(courseName, reqs->reqCourses[k]->course) == 0)
+                {
+                    for (int jk = k; jk < reqs->size -1; jk ++)
+                    {
+                        strcpy(reqs->reqCourses[jk]->course, reqs->reqCourses[jk+1]->course);
+                    }
+                    if (reqs->size > 0) reqs->size--;
+                    break;
+                }
+            }
+        }
+}
+
+void commandA(departmentList *dList, char *dName, course *course)
+{
+    department *d = getDepartment(dList, dName);
+    addElementCourseBT(d->cBT, course);
 }

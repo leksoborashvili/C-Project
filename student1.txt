@@ -2,7 +2,6 @@ STUDENT
 Cesar Gonzales
 AB Computer Science
 MATH 161
-MATH 162
 MATH 141
 CS 150
 MATH 182
